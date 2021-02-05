@@ -24,12 +24,14 @@ public class InsertImage {
 			
 			//Cria o arquivo	
 			if(!exportFile.exists()) {
+				System.out.println("Adicionando screenshot no arquivo Word ...");
 				wordPackage = WordprocessingMLPackage.createPackage();
 				mainDocumentPart = wordPackage.getMainDocumentPart();
 				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm"); 
 				mainDocumentPart.addStyledParagraphOfText("Title", "Evidência - "+nomeCenario);
 				mainDocumentPart.addStyledParagraphOfText("Title", sdf.format(new Date()));
 			} else if(exportFile.exists()) {
+				System.out.println("Adicionando screenshot no arquivo Word ...");
 				wordPackage = WordprocessingMLPackage.load(new File(caminhoCenario + "/" + nomeCenario + ".docx"));
 				mainDocumentPart = wordPackage.getMainDocumentPart();
 			}

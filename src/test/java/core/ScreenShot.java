@@ -58,61 +58,10 @@ public class ScreenShot {
 		return result;
 	}
 
-	public void copiaEvidencia(File origem, File destino) throws IOException {
-
-		String eviDestino = destino.toString();
-		criaDir(eviDestino);
-		copiaDir(origem, destino);
-	}
-
-	public static void copiaDir(File dirFont, File dirDest) throws IOException {
-
-		String[] arqs;
-		File arq;
-		int i;
-
-		criaDir(dirDest.toString());
-		// Copia arquivos do diretório:
-		arqs = dirFont.list();
-		for (i = 0; i < arqs.length; i++) {
-			arq = new File(dirFont.getPath(), arqs[i]);
-			if (arq.isDirectory()) {
-				copiaDir(arq, new File(dirDest.getPath(), arqs[i]));
-			} else {
-				copiaArq(arq, new File(dirDest.getPath(), arqs[i]));
-			}
-		}
-	}
-
-	public static void copiaArq(File arqFont, File arqDest) throws IOException {
-
-		FileChannel canalFont = null;
-		FileChannel canalDest = null;
-
-		// Apaga destino, se existir:
-		if (arqDest.exists()) {
-			arqDest.delete();
-		}
-
-		// Copia arquivo:
-		try {
-			canalFont = new FileInputStream(arqFont).getChannel();
-			canalDest = new FileOutputStream(arqDest).getChannel();
-			canalFont.transferTo(0, canalFont.size(), canalDest);
-		} finally {
-			if (canalFont != null && canalFont.isOpen()) {
-				canalFont.close();
-			}
-			if (canalDest != null && canalDest.isOpen()) {
-				canalDest.close();
-			}
-		}
-	}
 
 	public void excluirEvidencia(String cenario) {
-		String cwd = System.getProperty("user.dir") + "/..";
-		String pathCenario = cwd + "/" + "Evidencias" + "/" + "/" +
-				 "/" + cenario;
+		String cwd = System.getProperty("user.dir");
+		String pathCenario = cwd + "/" + "Evidencias" + "/" + cenario;
 		
 		File docEvidencia = new File(pathCenario);
 		

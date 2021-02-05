@@ -37,7 +37,7 @@ public class LoginTest {
 		DriverFactory.getDriver("chrome").get("https://mantis-prova.base2.com.br/login_page.php");
 		loginPage = new LoginPage(driver);
 		codCenario = testInfo.getDisplayName();
-		// screen.excluirEvidencia(acessoAmbiente, codCenario);
+		screen.excluirEvidencia(codCenario);
 	}
 
 	@AfterEach
