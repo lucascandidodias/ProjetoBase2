@@ -3,10 +3,6 @@ package test;
 import static org.junit.Assert.assertEquals;
 
 import java.io.FileNotFoundException;
-import java.util.Properties;
-
-import javax.sql.DataSource;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
@@ -54,7 +50,6 @@ public class LoginTest {
 		loginPage.setSenha(driver, "949494");
 		loginPage.clicarBotaoLogin(driver);
 		assertEquals("Your account may be disabled or blocked or the username/password you entered is incorrect.", loginPage.obterMensagemErroLogin(driver));
-
 	}
 
 }
