@@ -19,6 +19,8 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 //import utils.InsertImage;
 
+import utils.InsertImage;
+
 
 public class ScreenShot {
 	public static int indiceScreenShot = 1;
@@ -36,7 +38,7 @@ public class ScreenShot {
 
 		try {
 			FileUtils.copyFile(scrFile, new File(pathCenario, fileName + ".png"));
-			//InsertImage.inserirImagem(cenario, pathCenario, fileName + ".png", fileName);
+			InsertImage.inserirImagem(cenario, pathCenario, fileName + ".png", fileName);
 		} catch (IOException e) {
 
 		}
