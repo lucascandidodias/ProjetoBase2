@@ -1,6 +1,8 @@
 package test;
 
 import java.io.FileNotFoundException;
+import java.util.Properties;
+
 import static org.junit.Assert.*;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
@@ -9,6 +11,7 @@ import core.BaseTest;
 import core.DriverFactory;
 import core.ScreenShot;
 import pages.LoginPage;
+import utils.ConfiguracaoPropeties;
 
 public class LoginTest {
 
@@ -17,10 +20,13 @@ public class LoginTest {
 	static ScreenShot screen;
 	String codCenario;;
 	LoginPage loginPage;
+	static Properties conf;
+	static ConfiguracaoPropeties properties = new ConfiguracaoPropeties();
 
 	@BeforeAll
 	public static void inicializa() throws FileNotFoundException {
 		baseTest = new BaseTest("chrome");
+		conf = properties.lerArquivoConfiguracao();
 	}
 
 	@AfterAll
@@ -59,21 +65,21 @@ public class LoginTest {
 	@Test
 	@DisplayName("CT-02")
 	public void loginValido() {
-		loginPage.setUsuario("lucas.dias");
-		loginPage.setSenha("Mantis@123");
+		loginPage.setUsuario(conf.getProperty("login.usuario"));
+		loginPage.setSenha(conf.getProperty("login.senha"));
 		screen.print("Usuario e Senha", codCenario, driver);
 		loginPage.clicarBotaoLogin();
-		assertEquals("lucas.dias", loginPage.obterNomeUsuarioTelaInicial());
+		assertEquals(conf.getProperty("login.usuario").trim(), loginPage.obterNomeUsuarioTelaInicial());
 	}
 
 	@Test
 	@DisplayName("CT-03")
 	public void realizarLogout() {
-		loginPage.setUsuario("lucas.dias");
-		loginPage.setSenha("Mantis@123");
+		loginPage.setUsuario(conf.getProperty("login.usuario"));
+		loginPage.setSenha(conf.getProperty("login.senha"));
 		screen.print("Usuario e Senha", codCenario, driver);
 		loginPage.clicarBotaoLogin();
-		assertEquals("lucas.dias", loginPage.obterNomeUsuarioTelaInicial());
+		assertEquals(conf.getProperty("login.usuario").trim(), loginPage.obterNomeUsuarioTelaInicial());
 		loginPage.clicarBotaoSair();
 		assertTrue(loginPage.validarExistenciaBotaoLogin());
 

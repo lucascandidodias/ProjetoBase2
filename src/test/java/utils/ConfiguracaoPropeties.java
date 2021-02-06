@@ -7,6 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
 
+import org.openqa.selenium.support.ui.Sleeper;
+
 public class ConfiguracaoPropeties {
 
 	Properties config = new Properties();
@@ -21,7 +23,7 @@ public class ConfiguracaoPropeties {
 
 			try {
 				stream = new FileInputStream(cwd + "/config/config.properties");
-				config.load(stream);
+				config.load(stream);				
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();				
 				throw new RuntimeException("Arquivo config-db.properties nao encontrado.");

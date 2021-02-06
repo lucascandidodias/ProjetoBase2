@@ -28,6 +28,7 @@ public class RelatarCasosPage extends BasePage {
 	By btnEscolherArquivo = By.id("ufile[]");
 	By btnEnviarRelatorio = By.xpath("//input[@value='Enviar Relatório']");
 	By mensagemSucesso = By.xpath("//div[@align='center' and normalize-space(contains(text(),' Operação realizada com sucesso.'))]");
+	By mensagemFalhaRelatarCaso = By.xpath("//p[@style='color:red']");
 
 	public RelatarCasosPage(WebDriver driver) {
 		this.driver = driver;
@@ -112,5 +113,9 @@ public class RelatarCasosPage extends BasePage {
 	
 	public boolean obterMensagemOperacaoRealizadaComSucesso (String texto) {
 		return contains(mensagemSucesso, texto, driver);
+	}
+	
+	public String obterMensagemFalhaOperacao () {
+		return getText(mensagemFalhaRelatarCaso, driver, "Mensagem de falha", 5);
 	}
 }

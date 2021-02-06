@@ -12,6 +12,7 @@ import core.DriverFactory;
 import core.ScreenShot;
 import pages.LoginPage;
 import pages.RelatarCasosPage;
+import pages.VerCasosPage;
 import utils.ConfiguracaoPropeties;
 
 public class RelatarCasosTest {
@@ -22,8 +23,10 @@ public class RelatarCasosTest {
 	String codCenario;
 	LoginPage loginPage;
 	RelatarCasosPage relatarCasosPage;
+	VerCasosPage verCasosPage;
 	static Properties conf;
 	static ConfiguracaoPropeties properties = new ConfiguracaoPropeties();
+	String arquivo = System.getProperty("user.dir") + "/arquivoTeste/AqruivoTeste.docx";
 
 	@BeforeAll
 	public static void inicializa() throws FileNotFoundException {
@@ -43,6 +46,7 @@ public class RelatarCasosTest {
 		DriverFactory.getDriver("chrome").get("https://mantis-prova.base2.com.br/login_page.php");
 		loginPage = new LoginPage(driver);
 		relatarCasosPage = new RelatarCasosPage(driver);
+		verCasosPage = new VerCasosPage(driver);
 		codCenario = testInfo.getDisplayName();
 		screen.excluirEvidencia(codCenario);
 		loginValido();
@@ -56,11 +60,11 @@ public class RelatarCasosTest {
 	}
 	
 	public void loginValido() {
-		loginPage.setUsuario("lucas.dias");
-		loginPage.setSenha("Mantis@123");
+		loginPage.setUsuario(conf.getProperty("login.usuario"));
+		loginPage.setSenha(conf.getProperty("login.senha"));
 		screen.print("Usuario e Senha", codCenario, driver);
 		loginPage.clicarBotaoLogin();
-		assertEquals("lucas.dias", loginPage.obterNomeUsuarioTelaInicial());
+		assertEquals(conf.getProperty("login.usuario").trim(), loginPage.obterNomeUsuarioTelaInicial());
 	}
 	
 	@Test
@@ -77,7 +81,7 @@ public class RelatarCasosTest {
 		relatarCasosPage.selecionarGravidade(conf.getProperty("ct04.gravidade"));
 		relatarCasosPage.selecionarPrioridade(conf.getProperty("ct04.prioridade"));
 		relatarCasosPage.selecionarPerfil(conf.getProperty("ct04.perfil"));
-		relatarCasosPage.escreverPlataforma(conf.getProperty("ct04.platorma"));
+		relatarCasosPage.escreverPlataforma(conf.getProperty("ct04.plataforma"));
 		relatarCasosPage.escreverSistemaOperacional(conf.getProperty("ct04.sistemaOperacional"));
 		relatarCasosPage.escreverVersaoSo(conf.getProperty("ct04.VersaoSo"));
 		screen.print("_Relatando caso", codCenario, driver);
@@ -86,11 +90,37 @@ public class RelatarCasosTest {
 		relatarCasosPage.escreverPassos(conf.getProperty("ct04.passos"));
 		relatarCasosPage.escreverInformacoesAdicionais(conf.getProperty("ct04.informacoesAdicionais"));
 		screen.print("_Relatando caso", codCenario, driver);
-		relatarCasosPage.informarArquivoImportacao(conf.getProperty("ct04.caminhoArquivo"));
+		relatarCasosPage.informarArquivoImportacao(arquivo);
 		screen.print("_Arquivo Selecionado", codCenario, driver);
 		relatarCasosPage.ClicarBotaoEnviarRelatorio();
 		assertTrue(relatarCasosPage.obterMensagemOperacaoRealizadaComSucesso("Operação realizada com sucesso."));
+		screen.print("_Mensagem de Sucesso", codCenario, driver);
+		verCasosPage.acessarMenuVerCaso();
+		verCasosPage.clicarPrimeiroCasoDaLista();				
+		assertEquals(conf.getProperty("ct04.projeto"), verCasosPage.obterNomeProjeto());
+		assertEquals(conf.getProperty("login.usuario"), verCasosPage.obterNomeRelator());
+		assertEquals(conf.getProperty("ct04.prioridade"), verCasosPage.obterPrioridade());
+		assertEquals(conf.getProperty("ct04.gravidade"), verCasosPage.obterGravidade());
+		assertEquals(conf.getProperty("ct04.frequencia"), verCasosPage.obterFrequencia());
+		assertEquals(conf.getProperty("ct04.plataforma"), verCasosPage.obterPlataforma());
+		assertEquals(conf.getProperty("ct04.sistemaOperacional"), verCasosPage.obterSo());
+		assertEquals(conf.getProperty("ct04.VersaoSo"), verCasosPage.obterVersaoSo());
+		
 		
 	}
+	
+	@Test
+	@DisplayName("CT-05")
+	public void relatarCasoSemPreencherDados() {
+		relatarCasosPage.acessarMenuRelatarCaso();
+		assertEquals("Selecionar Projeto", relatarCasosPage.validarCarregamentoPaginaSelecionarProjeto());
+		relatarCasosPage.selecionarProjeto(conf.getProperty("ct04.projeto"));
+		screen.print("_Projeto selecionado", codCenario, driver);
+		relatarCasosPage.clicarBotaoSelecionarProjeto();
+		assertTrue(relatarCasosPage.validarCarregamentoFormularioDeCaso());		
+		relatarCasosPage.ClicarBotaoEnviarRelatorio();
+		assertEquals("Um campo necessário 'Resumo' estava vazio. Por favor, verifique novamente suas entradas.", relatarCasosPage.obterMensagemFalhaOperacao());		
+	}
+
 
 }
