@@ -7,7 +7,7 @@
 	<artifactId>base2</artifactId>
 	<version>1.0-SNAPSHOT</version>
 	<name>First</name>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 	<url />
 	
 	<properties>
@@ -102,4 +102,31 @@
             <artifactId>jcl-over-slf4j</artifactId>
         </dependency>
     </dependencies>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.7.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M4</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- `mvn clean test site` to generate the junit html report-->
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>3.0.0-M4</version>
+            </plugin>
+        </plugins>
+    </reporting>
+    
 </project>
