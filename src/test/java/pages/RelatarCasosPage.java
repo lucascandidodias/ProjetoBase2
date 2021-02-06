@@ -13,6 +13,19 @@ public class RelatarCasosPage extends BasePage {
 	By comboBoxProjeto = By.xpath("//td[2]/select[@name='project_id']");
 	By btnSelecionarProjeto = By.xpath("//input[@class='button']");
 	By tituloFormularioDetalherelatorio = By.xpath("//td[@class='form-title' and normalize-space(text()='Digite os Detalhes do Relatório')]");
+	By comboBoxCategoria = By.xpath("//td[2]/select[@name='category_id']");
+	By comboBoxFrequencia = By.xpath("//td[2]/select[@name='reproducibility']");
+	By comboBoxGravidade = By.xpath("//td[2]/select[@name='severity']");
+	By comboBoxPrioridade = By.xpath("//td[2]/select[@name='priority']");
+	By comboBoxPerfil = By.xpath("//td[2]/select[@name='profile_id']");
+	By inputPlataforma = By.id("platform");
+	By inputSo = By.id("os");
+	By inputVersaoSo = By.id("os_build");
+	By inputResumo = By.xpath("//input[@name='summary']");
+	By inputDescricao = By.xpath("//textarea[@name='description']");
+	By inputPassos = By.xpath("//textarea[@name='steps_to_reproduce']");
+	By inputInformacaoAdicionais = By.xpath("//textarea[@name='additional_info']");
+	By btnEnviarRelatorio = By.xpath("//input[@value='Enviar Relatório']");
 
 	public RelatarCasosPage(WebDriver driver) {
 		this.driver = driver;
@@ -37,4 +50,57 @@ public class RelatarCasosPage extends BasePage {
 	public boolean validarCarregamentoFormularioDeCaso() {
 		return existe(tituloFormularioDetalherelatorio, driver, 2);
 	}
+	
+	public void selecionarCategoria(String categoria) {
+		selectComboBoxPorTexto(comboBoxCategoria, categoria , driver);
+	}
+	
+	public void selecionarFrequencia(String frequencia) {
+		selectComboBoxPorTexto(comboBoxFrequencia, frequencia, driver);
+	}
+	
+	public void selecionarGravidade(String gravidade) {
+		selectComboBoxPorTexto(comboBoxGravidade, gravidade, driver);
+	}
+	
+	public void selecionarPrioridade(String prioridade) {
+		selectComboBoxPorTexto(comboBoxPrioridade, prioridade, driver);
+	}
+	
+	public void selecionarPerfil(String perfil) {
+		selectComboBoxPorTexto(comboBoxPerfil, perfil, driver);
+	}
+	
+	public void escreverPlataforma(String plataforma) {
+		escrever(inputPlataforma, driver, plataforma);
+	}
+	
+	public void escreverSistemaOperacional(String so) {
+		escrever(inputSo, driver, so);
+	}
+	
+	public void escreverVersaoSo(String versao) {
+		escrever(inputVersaoSo, driver, versao);
+	}
+	
+	public void escreverResumo(String resumo) {
+		escrever(inputResumo, driver, resumo);
+	}
+	
+	public void escreverDescricao(String descricao) {
+		escrever(inputDescricao, driver, descricao);
+	}
+	
+	public void escreverPassos(String passos) {
+		escrever(inputPassos, driver, passos);
+	}
+	
+	public void escreverInformacoesAdicionais(String informacoesAdicionais) {
+		escrever(inputInformacaoAdicionais, driver, informacoesAdicionais);
+	}
+	
+	public void ClicarBotaoEnviarRelatorio() {
+		clicar(btnEnviarRelatorio, driver, 1);
+	}
+	
 }

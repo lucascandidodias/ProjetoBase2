@@ -65,6 +65,18 @@ public class RelatarCasosTest {
 		relatarCasosPage.selecionarProjeto("Lucas Dias's Project");
 		relatarCasosPage.clicarBotaoSelecionarProjeto();
 		assertTrue(relatarCasosPage.validarCarregamentoFormularioDeCaso());
+		relatarCasosPage.selecionarCategoria("[Todos os Projetos] General");
+		relatarCasosPage.selecionarFrequencia("aleatório");
+		relatarCasosPage.selecionarGravidade("grande");
+		relatarCasosPage.selecionarPrioridade("alta");
+		relatarCasosPage.selecionarPerfil("PC Windows 7");
+		relatarCasosPage.escreverPlataforma("PC");
+		relatarCasosPage.escreverSistemaOperacional("Windows");
+		relatarCasosPage.escreverVersaoSo("Windows 7");
+		relatarCasosPage.escreverResumo("a");
+		relatarCasosPage.escreverDescricao("a");
+		relatarCasosPage.escreverPassos("a");
+		relatarCasosPage.escreverInformacoesAdicionais("a");
 	}
 
 }
