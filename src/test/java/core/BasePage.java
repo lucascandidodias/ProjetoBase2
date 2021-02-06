@@ -15,7 +15,6 @@ import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
-
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.exceptions.InvalidFormatException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
@@ -103,7 +102,6 @@ public class BasePage {
 
 			return false;
 		}
-
 	}
 
 	public boolean aguarda(By carregando, WebDriver driver) {
@@ -117,13 +115,12 @@ public class BasePage {
 		return visible;
 	}
 
-	public void upload(By Element, WebDriver driver, String obj) {
-
-		WebElement upload = driver.findElement(Element);
-		upload.click();
-
-		upload.sendKeys(obj);
-
+	public boolean contains(By Element, String texto, WebDriver driver) {
+		if (getText(Element, driver, texto, 10).contains(texto)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public String getText(By Element, WebDriver driver, String nome, int timeout) {
