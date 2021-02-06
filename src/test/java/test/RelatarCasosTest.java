@@ -9,14 +9,16 @@ import core.BaseTest;
 import core.DriverFactory;
 import core.ScreenShot;
 import pages.LoginPage;
+import pages.RelatarCasosPage;
 
-public class LoginTest {
+public class RelatarCasosTest {
 
 	static WebDriver driver;
 	static BaseTest baseTest;
 	static ScreenShot screen;
 	String codCenario;;
 	LoginPage loginPage;
+	RelatarCasosPage relatarCasosPage;
 
 	@BeforeAll
 	public static void inicializa() throws FileNotFoundException {
@@ -34,8 +36,10 @@ public class LoginTest {
 		driver = baseTest.inicializa();
 		DriverFactory.getDriver("chrome").get("https://mantis-prova.base2.com.br/login_page.php");
 		loginPage = new LoginPage(driver);
+		relatarCasosPage = new RelatarCasosPage(driver);
 		codCenario = testInfo.getDisplayName();
 		screen.excluirEvidencia(codCenario);
+		loginValido();
 	}
 
 	@AfterEach
@@ -45,19 +49,6 @@ public class LoginTest {
 		baseTest.finaliza();
 	}
 	
-	@Test
-	@DisplayName("CT-01")
-	public void loginInvalido() {
-		loginPage.setUsuario("usuarioinvalido");
-		loginPage.setSenha("949494");
-		screen.print("Usuario e Senha", codCenario, driver);
-		loginPage.clicarBotaoLogin();
-		assertEquals("Your account may be disabled or blocked or the username/password you entered is incorrect.",
-				loginPage.obterMensagemErroLogin());
-	}
-
-	@Test
-	@DisplayName("CT-02")
 	public void loginValido() {
 		loginPage.setUsuario("lucas.dias");
 		loginPage.setSenha("Mantis@123");
@@ -65,18 +56,15 @@ public class LoginTest {
 		loginPage.clicarBotaoLogin();
 		assertEquals("lucas.dias", loginPage.obterNomeUsuarioTelaInicial());
 	}
-
+	
 	@Test
-	@DisplayName("CT-03")
-	public void realizarLogout() {
-		loginPage.setUsuario("lucas.dias");
-		loginPage.setSenha("Mantis@123");
-		screen.print("Usuario e Senha", codCenario, driver);
-		loginPage.clicarBotaoLogin();
-		assertEquals("lucas.dias", loginPage.obterNomeUsuarioTelaInicial());
-		loginPage.clicarBotaoSair();
-		assertTrue(loginPage.validarExistenciaBotaoLogin());
-
+	@DisplayName("CT-04")
+	public void relatarCaso() {
+		relatarCasosPage.acessarMenuRelatarCaso();
+		assertEquals("Selecionar Projeto", relatarCasosPage.validarCarregamentoPaginaSelecionarProjeto());
+		relatarCasosPage.selecionarProjeto("Lucas Dias's Project");
+		relatarCasosPage.clicarBotaoSelecionarProjeto();
+		assertTrue(relatarCasosPage.validarCarregamentoFormularioDeCaso());
 	}
 
 }

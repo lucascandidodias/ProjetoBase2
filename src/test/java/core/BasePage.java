@@ -126,17 +126,6 @@ public class BasePage {
 
 	}
 
-	public boolean validamsg(By Element, WebDriver driver, String msg) {
-		existe(Element, driver, 120);
-		String mensagem = driver.findElement(Element).getText();
-		if (mensagem.equals(msg)) {
-			return true;
-		} else {
-			return false;
-		}
-
-	}
-
 	public String getText(By Element, WebDriver driver, String nome, int timeout) {
 
 		try {
