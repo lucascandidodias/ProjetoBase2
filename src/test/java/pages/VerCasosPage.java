@@ -10,6 +10,7 @@ public class VerCasosPage extends BasePage {
 	WebDriver driver;
 	By menuVerCaso = By.xpath("//td[@class='menu']/a[text()='Ver Casos']");
 	By codigoCaso = By.xpath("//*[@id='buglist']/tbody/tr[4]/td[4]/a");
+	By numeroProjeto = By.xpath("//td[@class='category' and text()='Projeto']/../../tr[3]/td[1]");
 	By nomeProjeto = By.xpath("//td[@class='category' and text()='Projeto']/../../tr[3]/td[2]");
 	By nomeRelator = By.xpath("//td[@class='category' and text()='Relator']/../td[2]");
 	By detalhePrioridade = By.xpath("//td[@class='category' and text()='Prioridade']/../td[2]");
@@ -18,6 +19,8 @@ public class VerCasosPage extends BasePage {
 	By detalhePlataforma= By.xpath("//td[@class='category' and text()='Plataforma']/../td[2]");
 	By detalheSo = By.xpath("//td[@class='category' and text()='Plataforma']/../td[4]");
 	By detalheVersaoSo = By.xpath("//td[@class='category' and text()='Plataforma']/../td[6]");
+	By inputSearchCasos = By.xpath("//input[@name='bug_id']");
+	By btnIrPara = By.xpath("//input[@value='Ir para']");
 	
 	public VerCasosPage(WebDriver driver) {
 		this.driver = driver;
@@ -63,7 +66,17 @@ public class VerCasosPage extends BasePage {
 		return getText(detalheVersaoSo, driver, "Versao Sistema operacional", 1);
 	}
 	
+	public void PesquisarCaso (String codigo) {
+		escrever(inputSearchCasos, driver, codigo);
+	}
 	
+	public void clicarBotaoIrPara () {
+		clicar(btnIrPara, driver, 1);
+	}
+	
+	public String obterNumeroCaso () {
+		return getText(numeroProjeto, driver, "numero Projeto", 1);
+	}
 	
 	
 

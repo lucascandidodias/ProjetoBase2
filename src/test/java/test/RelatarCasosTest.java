@@ -38,7 +38,7 @@ public class RelatarCasosTest {
 	public static void finaliza() {
 		baseTest.finaliza();
 	}
-	
+
 	@BeforeEach
 	public void start(TestInfo testInfo) {
 		screen = new ScreenShot();
@@ -58,7 +58,7 @@ public class RelatarCasosTest {
 		ScreenShot.indiceScreenShot = 1;
 		baseTest.finaliza();
 	}
-	
+
 	public void loginValido() {
 		loginPage.setUsuario(conf.getProperty("login.usuario"));
 		loginPage.setSenha(conf.getProperty("login.senha"));
@@ -66,7 +66,7 @@ public class RelatarCasosTest {
 		loginPage.clicarBotaoLogin();
 		assertEquals(conf.getProperty("login.usuario").trim(), loginPage.obterNomeUsuarioTelaInicial());
 	}
-	
+
 	@Test
 	@DisplayName("CT-04")
 	public void relatarCaso() {
@@ -96,7 +96,7 @@ public class RelatarCasosTest {
 		assertTrue(relatarCasosPage.obterMensagemOperacaoRealizadaComSucesso("Operação realizada com sucesso."));
 		screen.print("_Mensagem de Sucesso", codCenario, driver);
 		verCasosPage.acessarMenuVerCaso();
-		verCasosPage.clicarPrimeiroCasoDaLista();				
+		verCasosPage.clicarPrimeiroCasoDaLista();
 		assertEquals(conf.getProperty("ct04.projeto"), verCasosPage.obterNomeProjeto());
 		assertEquals(conf.getProperty("login.usuario"), verCasosPage.obterNomeRelator());
 		assertEquals(conf.getProperty("ct04.prioridade"), verCasosPage.obterPrioridade());
@@ -105,10 +105,9 @@ public class RelatarCasosTest {
 		assertEquals(conf.getProperty("ct04.plataforma"), verCasosPage.obterPlataforma());
 		assertEquals(conf.getProperty("ct04.sistemaOperacional"), verCasosPage.obterSo());
 		assertEquals(conf.getProperty("ct04.VersaoSo"), verCasosPage.obterVersaoSo());
-		
-		
+
 	}
-	
+
 	@Test
 	@DisplayName("CT-05")
 	public void relatarCasoSemPreencherDados() {
@@ -117,10 +116,10 @@ public class RelatarCasosTest {
 		relatarCasosPage.selecionarProjeto(conf.getProperty("ct04.projeto"));
 		screen.print("_Projeto selecionado", codCenario, driver);
 		relatarCasosPage.clicarBotaoSelecionarProjeto();
-		assertTrue(relatarCasosPage.validarCarregamentoFormularioDeCaso());		
+		assertTrue(relatarCasosPage.validarCarregamentoFormularioDeCaso());
 		relatarCasosPage.ClicarBotaoEnviarRelatorio();
-		assertEquals("Um campo necessário 'Resumo' estava vazio. Por favor, verifique novamente suas entradas.", relatarCasosPage.obterMensagemFalhaOperacao());		
+		assertEquals("Um campo necessário 'Resumo' estava vazio. Por favor, verifique novamente suas entradas.",
+				relatarCasosPage.obterMensagemFalhaOperacao());
 	}
-
 
 }
